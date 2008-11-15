@@ -3,7 +3,7 @@
 // @description do hogehoge to allow mouse-gesture on flash.
 // @author miya2000
 // @namespace http://d.hatena.ne.jp/miya2000/
-// @version 1.0.0
+// @version 1.1.0
 // @include http://*
 // @exclude http://www.nicovideo.jp/watch/*
 // @exclude http://*youtube*
@@ -134,14 +134,19 @@
         });
     }
     
-    function main() {
-        if (!document.body) return;
-        var embedFlash = evaluate('//embed[not(@wmode) and @type="application/x-shockwave-flash"]');
-        var objectFlash = evaluate('//object[count(param[@name="wmode"])=0 and (@type="application/x-shockwave-flash" or @classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000")]');
+    function doHogeHoge(target) {
+        var embedFlash = evaluate('//embed[not(@wmode) and @type="application/x-shockwave-flash"]', target);
+        var objectFlash = evaluate('//object[count(param[@name="wmode"])=0 and (@type="application/x-shockwave-flash" or @classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000")]', target);
         if (embedFlash.length == 0 && objectFlash.length == 0) {
             return;
         }
         fe(embedFlash); fe(objectFlash);
+        embedFlash.forEach(setWModeEm);
+        objectFlash.forEach(setWModeOb);
+    }
+    
+    function main() {
+        if (!document.body) return;
         defer(
             function(next) {
                 // for Eolas's patent.
@@ -158,11 +163,14 @@
                 }, 0);
             },
             function() {
-                embedFlash.forEach(setWModeEm);
-                objectFlash.forEach(setWModeOb);
+                doHogeHoge(document.body);
+                document.addEventListener('DOMNodeInserted', function(e) {
+                    document.removeEventListener('DOMNodeInserted', arguments.callee, false);
+                    doHogeHoge(e.target);
+                    document.addEventListener('DOMNodeInserted', arguments.callee, false);
+                }, false);
             }
         );
     }
     document.addEventListener('DOMContentLoaded', main, false);
 })()
-
