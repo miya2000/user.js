@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name ldr - fix br (for Opera).
+// @include http://reader.livedoor.com/
 // @include http://fastladder.com/reader/
 // ==/UserScript==
 (function() {
