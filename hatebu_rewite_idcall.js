@@ -7,7 +7,7 @@
 // ==/UserScript==
 (function() {
     function main(){
-        var as = document.evaluate('\/\/a[starts-with(@href,"http://b.hatena.ne.jp/")][starts-with(text(),"id:")]', document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+        var as = document.evaluate('\/\/a[starts-with(text(),"id:")]', document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
         var reg = /id:(.*)/;
         for (var i = 0, len = as.snapshotLength; i < len; i++) {
             var a = as.snapshotItem(i);
@@ -20,4 +20,3 @@
     }
     document.addEventListener('DOMContentLoaded', main, false);
 })()
-
