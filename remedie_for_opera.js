@@ -9,6 +9,7 @@
         if (src && src.match(/remedie\.js/)) {
             // prevent overwrite history.
             e.element.text = e.element.text.replace(/location\.href = "#channel\/" \+ channel\.id;/, [
+                'if (window.event) window.event.preventDefault();',
                 'var nextHash = "#channel/" + channel.id;',
                 'if (nextHash != location.hash) location.href = nextHash;'
             ].join('\n'));
@@ -40,20 +41,28 @@
             org_showChannel.apply(this, arguments);
             this.current_href = location.href;
         }
-        setInterval(function() {
-            if (remedie.current_href != location.href) {
-                remedie.current_href = location.href;
-                var args = location.hash.split('/');
-                if (args[0] == '#channel') {
-                    remedie.showChannel( remedie.channels[args[1]] );
-                }
-                else if (args[0] == '' || args[0] == '#menu') {
-                    if (remedie.current_id) {
-                        remedie.toggleChannelView(false);
+        var org_initialize = Remedie.prototype.initialize;
+        Remedie.prototype.initialize = function() {
+            org_initialize.apply(this, arguments);
+            this.current_href = location.href;
+            startObserveLocation();
+        }
+        function startObserveLocation() {
+            setInterval(function() {
+                if (remedie.current_href != location.href) {
+                    remedie.current_href = location.href;
+                    var args = location.hash.split('/');
+                    if (args[0] == '#channel') {
+                        remedie.showChannel( remedie.channels[args[1]] );
+                    }
+                    else if (args[0] == '' || args[0] == '#menu') {
+                        if (remedie.current_id) {
+                            remedie.toggleChannelView(false);
+                        }
                     }
                 }
-            }
-        }, 100);
+            }, 100);
+        }
     }
     document.addEventListener('DOMContentLoaded', main, false);
 })();
