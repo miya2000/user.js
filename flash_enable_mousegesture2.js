@@ -135,8 +135,8 @@
     }
     
     function doHogeHoge(target) {
-        var embedFlash = evaluate('//embed[not(@wmode) and @type="application/x-shockwave-flash"]', target);
-        var objectFlash = evaluate('//object[count(param[@name="wmode"])=0 and (@type="application/x-shockwave-flash" or @classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000")]', target);
+        var embedFlash = evaluate('//embed[(@wmode!="opaque" and @wmode!="transparent") and @type="application/x-shockwave-flash"]', target);
+        var objectFlash = evaluate('//object[count(param[@name="wmode" and (@value="opaque" or @value="transparent")])=0 and (@type="application/x-shockwave-flash" or @classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000")]', target);
         if (embedFlash.length == 0 && objectFlash.length == 0) {
             return;
         }
@@ -150,15 +150,19 @@
         defer(
             function(next) {
                 // for Eolas's patent.
+                var funcName = '__tmp' + Math.ceil(new Date * Math.random()); // prevent conflict other script.
                 var ex_script = document.createElement('script');
                 ex_script.style.display = 'none';
-                ex_script.src = 'data:text/javascript,window.___tmp=' + encodeURIComponent(replace.toString());
-                var bak_tmp = window.___tmp;
+                ex_script.src = 'data:text/javascript,window.' + funcName + '=' + encodeURIComponent(replace.toString());
+                var bak_tmp = window[funcName];
                 document.body.appendChild(ex_script);
                 setTimeout(function() {
-                    replace = window.___tmp;
-                    document.body.removeChild(ex_script);
-                    window.___tmp = bak_tmp;
+                    if (ex_script.parentNode) {
+                        ex_script.parentNode.removeChild(ex_script);
+                    }
+                    if (!window[funcName]) return;
+                    replace = window[funcName];
+                    window[funcName] = bak_tmp;
                     next();
                 }, 0);
             },
