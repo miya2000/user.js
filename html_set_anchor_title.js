@@ -3,10 +3,14 @@
 // @description set title to anchor without title attribute.
 // @author miya2000
 // @namespace http://d.hatena.ne.jp/miya2000/
-// @version 1.0.0
+// @version 1.1
 // @include http://*
 // ==/UserScript==
 (function(){
+
+    if (document.documentElement.getAttribute('xmlns') == 'http://www.w3.org/1999/xhtml' && !document.documentElement.namespaceURI) {
+        return;
+    }
 
     function guessTitle(a) {
         var title = a.textContent.replace(/^\s+|\s+$/g, '');
@@ -33,4 +37,3 @@
     }
     document.addEventListener('DOMContentLoaded', main, false);
 })()
-

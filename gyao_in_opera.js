@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name GyaO - GyaO in Opera
 // @description Open GyaO movie directly.
-// @version 1.1.0
+// @version 1.2.0
 // @include http://www.gyao.jp/*
 // @include http://hot.gyao.jp/*
 // @include http://utauga.jp/karaoke/*
