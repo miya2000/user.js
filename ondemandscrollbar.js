@@ -4,8 +4,9 @@
 // @include   http://*
 // ==/UserScript==
 (function() {
-    var scrollbar, tip;
+    var scrollbar, tip, ele
     function initScrollbar() {
+        ele = (document.compatMode == 'BackCompat') ? document.body : document.documentElement;
         scrollbar = document.createElement('div');
         scrollbar.style.cssText = [
             'position: fixed;',
@@ -44,7 +45,6 @@
         showScrollbar();
         updateScrollbar();
     }
-    var ele = (document.compatMode == 'BackCompat') ? document.body : document.documentElement;
     function updateScrollbar() {
         if (ele.scrollHeight == ele.clientHeight) {
             tip.style.display = 'none';
