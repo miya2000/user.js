@@ -38,8 +38,8 @@
         showScrollbar();
         updateScrollbar();
     }
+    var ele = (document.compatMode == "BackCompat") ? document.body : document.documentElement;
     function updateScrollbar() {
-        var ele = document.documentElement;
         if (ele.scrollHeight == ele.clientHeight) {
             tip.style.display = 'none';
         }
