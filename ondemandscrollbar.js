@@ -11,6 +11,9 @@
             'position: fixed;',
             'top: 0;',
             'right: 0;',
+            'margin: 0;',
+            'padding: 0;',
+            'border: none;',
             'z-index: 1000;',
             'width: 16px;',
             'height: 100%;',
@@ -20,6 +23,9 @@
         tip = document.createElement('div');
         tip.style.cssText = [
             'position: relative;',
+            'margin: 0;',
+            'padding: 0;',
+            'border: none;',
             'width: 100%;',
             'height: 40px;',
             'background-color: #DDFFDD;',
@@ -31,14 +37,14 @@
         window.addEventListener('scroll', showAndUpdateScrollbar, false);
         window.addEventListener('resize', updateScrollbar,false);
         document.body.appendChild(scrollbar);
-        updateScrollbar();
+        showAndUpdateScrollbar();
     }
     
     function showAndUpdateScrollbar() {
         showScrollbar();
         updateScrollbar();
     }
-    var ele = (document.compatMode == "BackCompat") ? document.body : document.documentElement;
+    var ele = (document.compatMode == 'BackCompat') ? document.body : document.documentElement;
     function updateScrollbar() {
         if (ele.scrollHeight == ele.clientHeight) {
             tip.style.display = 'none';
@@ -47,6 +53,9 @@
             tip.style.top = (ele.scrollTop / ele.scrollHeight) * 100 + '%';
             tip.style.height = (ele.clientHeight / ele.scrollHeight) * 100 + '%';
             tip.style.display = '';
+            if (tip.offsetHeight < 20) {
+                tip.style.height = '20px';
+            }
         }
     }
     
