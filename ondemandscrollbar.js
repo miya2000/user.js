@@ -48,7 +48,7 @@
         document.addEventListener('DOMNodeInserted', document_domnodeinserted, false);
         document.body.appendChild(scrollbar);
         
-        if (getPref('killScrollbar')) {
+        if (getPref('ondemandscrollbar_killScrollbar')) {
             killScrollbar();
         }
     }
@@ -166,7 +166,7 @@
     
     var scrollbarWidth = 16;
     function killScrollbar() {
-        setPref('killScrollbar', '1');
+        setPref('ondemandscrollbar_killScrollbar', '1');
         if (scrollbar.offsetWidth) scrollbarWidth = scrollbar.offsetWidth;
         scrollbar.style.display = 'none';
         setTimeout(function() {
@@ -179,7 +179,7 @@
         }
     }
     function restoreScrollbar() {
-        setPref('killScrollbar', null);
+        setPref('ondemandscrollbar_killScrollbar', null);
         document.removeEventListener('dblclick', observeDblclick, false);
         scrollbar.style.display = '';
         showScrollbar(2000);
