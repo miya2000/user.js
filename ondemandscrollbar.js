@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name      ondemand scrollbar
 // @namespace http://orera.g.hatena.ne.jp/miya2000/
-// @version   1.01
+// @version   1.02
 // @include   http://*
 // @exclude   http://fastladder.com/reader/*
 // @exclude   http://reader.livedoor.com/reader/*
@@ -69,7 +69,7 @@
         scrollDragStart(e);
     }
     function window_scroll(e) {
-        updateScrollbar();
+        showScrollbarMoreNegatively(1300);
     }
     function window_resize(e) {
         updateScrollbar();
@@ -113,6 +113,11 @@
     }
     function showScrollbarNegatively(hideAfter) {
         if (showing || root.scrollHeight > root.clientHeight) {
+            showScrollbar(hideAfter);
+        }
+    }
+    function showScrollbarMoreNegatively(hideAfter) {
+        if (showing && root.scrollHeight > root.clientHeight) {
             showScrollbar(hideAfter);
         }
     }
