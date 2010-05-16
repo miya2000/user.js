@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name      ondemand scrollbar
 // @namespace http://orera.g.hatena.ne.jp/miya2000/
-// @version   1.00
+// @version   1.01
 // @include   http://*
 // @exclude   http://fastladder.com/reader/*
 // @exclude   http://reader.livedoor.com/reader/*
@@ -143,6 +143,9 @@
 
     var startY = 0, startScrollTop;
     function scrollDragStart(e) {
+        if (document.documentElement.offsetWidth < window.innerWidth) {
+            return;
+        }
         e.preventDefault();
         document.addEventListener('mousemove', scrollDragging, false);
         document.addEventListener('mouseup', scrollDragEnd, false);
