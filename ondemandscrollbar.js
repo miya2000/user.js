@@ -57,7 +57,7 @@
         showScrollbar(1300);
     }
     function scrollbar_mousemove(e) {
-        showScrollbar(1300);
+        showScrollbarNegatively(1300);
     }
     function scrollbar_mouseout(e) {
         hideScrollbarLater(700);
@@ -98,10 +98,9 @@
         }
     }
     
-    var hide_id, holding = false;
+    var hide_id, showing = false, holding = false;
     function showScrollbar(hideAfter) {
         if (holding) return;
-        opera.postError(document.documentElement.offsetWidth + ":" +  window.innerWidth);
         // scrollbar showing.
         if (document.documentElement.offsetWidth < window.innerWidth) {
             hideScrollbar();
@@ -109,11 +108,18 @@
         }
         updateScrollbar();
         scrollbar.style.opacity = 0.7;
+        showing = true;
         hideScrollbarLater(hideAfter);
+    }
+    function showScrollbarNegatively(hideAfter) {
+        if (showing || root.scrollHeight > root.clientHeight) {
+            showScrollbar(hideAfter);
+        }
     }
     function hideScrollbar() {
         if (holding) return;
         scrollbar.style.opacity = 0;
+        showing = false;
     }
     function hideScrollbarLater(milliseconds) {
         if (holding) return;
