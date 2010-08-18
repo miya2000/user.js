@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name del.icio.us - Auto Commit del.icio.us (for new version.)
 // @namespace http://d.hatena.ne.jp/miya2000/
-// @version 2.0.1
-// @include http://delicious.com/save?*
+// @version 2.0.2
+// @include http://www.delicious.com/save?*
 // ==/UserScript==
 (function(){
 
