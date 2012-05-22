@@ -23,12 +23,14 @@ function main() {
     var input = document.createElement('input');
     input.readOnly = true;
     input.autocomplete = 'off';
+    input.size = 20;
+    input.style.cssText = 'color: #444; border: #222 solid 2px; border-radius: 5px; padding: 2px 4px; opacity: 0.9;';
     input.addEventListener('focus', function() {
-        input.style.backgroundColor = '#fcc';
+        input.style.backgroundColor = '#301010';
         input.value = 'Hotkey available.'
     }, false);
     input.addEventListener('blur', function() {
-        input.style.backgroundColor = '#9D9';
+        input.style.backgroundColor = '#102510';
         input.value = 'Hotkey unavailable.'
     }, false);
     input.addEventListener('keypress', function(e) {
@@ -44,12 +46,12 @@ function main() {
             }
         }
     }, false);
-    document.getElementById('video_controls').appendChild(input);
+    (document.getElementById('textMarquee') || document.getElementById('player_bottom_textlink')).appendChild(input);
     adjustView(input);
     input.focus();
     
     document.addEventListener('keypress', function(e) {
-        if (e.target.tagName == 'INPUT') return;
+        if (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA') return;
         if (e.keyCode === HOTKEY.k) {
             if (typeof(HOTKEY.f) == 'function') {
                 HOTKEY.f();
@@ -64,7 +66,7 @@ function main() {
         input.focus();
     }
     function play_pause() {
-        var flvplayer = document.getElementById('flvplayer');
+        var flvplayer = getFlvPlayer();
         if (!flvplayer) return;
         if (flvplayer.ext_getStatus() == 'playing') {
             flvplayer.ext_play(0);
@@ -80,7 +82,7 @@ function main() {
         volume(-5);
     }
     function volume(vol) {
-        var flvplayer = document.getElementById('flvplayer');
+        var flvplayer = getFlvPlayer();
         if (!flvplayer) return;
         var cur = Number(flvplayer.ext_getVolume());
         var to = cur + Number(vol);
@@ -96,7 +98,7 @@ function main() {
         else           seek(-10);
     }
     function seek(time) {
-        var flvplayer = document.getElementById('flvplayer');
+        var flvplayer = getFlvPlayer();
         if (!flvplayer) return;
         var len = Number(flvplayer.ext_getTotalTime());
         var cur = Number(flvplayer.ext_getPlayheadTime());
@@ -118,7 +120,7 @@ function main() {
         if (p.y < view.scrollTop || 
             p.y > (view.scrollTop + view.scrollHeight)
         ) {
-            ele.parentNode.scrollIntoView();
+            ele.parentNode.scrollIntoView(false);
         }
     }
     function getAbsolutePosition(el) {
@@ -127,6 +129,10 @@ function main() {
             x += p.offsetLeft, y += p.offsetTop, p = p.offsetParent;
         }
         return { x : x, y : y }
+    }
+    
+    function getFlvPlayer() {
+        return document.getElementById('external_nicoplayer') || document.getElementById('flvplayer');
     }
 }
 if (window.opera) main();
