@@ -80,6 +80,11 @@
             text = text.replace('既読にする', 'mark as read');
             e.element.text = text;
         }
+        if (/reader_addon\.[\d.]*\.js/.test(src)) {
+            // skip English mode(?) layout adjustment.
+            text = text.replace(/Language == 'English'/g, 'false');
+            e.element.text = text;
+        }
     }
     opera.addEventListener('BeforeScript', translateScript, false);
     
