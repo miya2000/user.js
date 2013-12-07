@@ -2,9 +2,9 @@
 // @name      nicovideo - hotkey
 // @namespace http://d.hatena.ne.jp/miya2000/
 // @author    miya2000
-// @version   1.0.0
+// @version   3.0.0Å@(niconico Ginza)
 // @include   http://www.nicovideo.jp/watch/*
-// @exclude   http://*http
+// @exclude   http://*http://*
 // ==/UserScript==
 (function() {
 function main() {
@@ -33,7 +33,7 @@ function main() {
         input.style.backgroundColor = '#102510';
         input.value = 'Hotkey unavailable.'
     }, false);
-    input.addEventListener('keypress', function(e) {
+    input.addEventListener('keydown', function(e) {
         var keyCode = e.keyCode;
         for (var i = 0; i < CONFIG.length; i++) {
             if (keyCode == CONFIG[i].k) {
@@ -46,7 +46,7 @@ function main() {
             }
         }
     }, false);
-    (document.getElementById('textMarquee') || document.getElementById('player_bottom_textlink')).appendChild(input);
+    (document.getElementById('playerNicoplayer')).appendChild(input);
     adjustView(input);
     input.focus();
     
