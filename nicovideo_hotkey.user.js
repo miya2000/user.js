@@ -2,7 +2,7 @@
 // @name      nicovideo - hotkey
 // @namespace http://d.hatena.ne.jp/miya2000/
 // @author    miya2000
-// @version   3.0.0Å@(niconico Ginza)
+// @version   3.0.0 (niconico Ginza)
 // @include   http://www.nicovideo.jp/watch/*
 // @exclude   http://*http://*
 // ==/UserScript==
